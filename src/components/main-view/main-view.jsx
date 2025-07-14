@@ -1,30 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LocationCard } from "../location-card/location-card";
 import { LocationView } from "../location-view/location-view";
 
 export const MainView = () => {
-  const [locations, setLocations] = useState([
-    {
-      id: 1,
-      title: "Magnuson Park",
-      locatedAt: { fromStadiums: "East" },
-      dateNamed: "1977",
-    },
-    {
-      id: 2,
-      title: "Discovery Park",
-      locatedAt: { fromStadiums: "West" },
-      dateNamed: "1973",
-    },
-    {
-      id: 3,
-      title: "Capitol Hill",
-      locatedAt: { fromStadiums: "East" },
-      dateNamed: "1901",
-    },
-  ]);
+  const [locations, setLocations] = useState([]);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+  useEffect(() => {
+    fetch("https://polar-crag-88682-7adc6d8f37e3.herokuapp.com/locations")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Locations from API:", data);
+        const locationsFromApi = data.map((doc) => {
+          return {
+            id: doc._id,
+            title: doc.Title,
+            image: doc.ImagePath,
+            description: doc.Description,
+            locatedAt: {
+              fromStadiums: doc.LocatedAt.FromStadiums,
+              citySubdivision: doc.LocatedAt.CitySubdivision,
+            },
+            dateNamed: doc.DateNamed,
+          };
+        });
+        setLocations(locationsFromApi);
+      });
+  }, []);
 
   if (selectedLocation) {
     return (

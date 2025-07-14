@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const LocationCard = ({ location, onLocationClick }) => {
   return (
     <div
@@ -8,4 +10,11 @@ export const LocationCard = ({ location, onLocationClick }) => {
       {location.title}
     </div>
   );
+};
+
+LocationCard.propTypes = {
+  location: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+  onLocationClick: PropTypes.func.isRequired,
 };
