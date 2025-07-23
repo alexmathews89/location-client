@@ -1,14 +1,45 @@
 import { useState, useEffect } from "react";
 import { LocationCard } from "../location-card/location-card";
 import { LocationView } from "../location-view/location-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+
   const [locations, setLocations] = useState([]);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  /* 
   useEffect(() => {
-    fetch("https://polar-crag-88682-7adc6d8f37e3.herokuapp.com/locations")
+    if (!token) {
+      return;
+    }
+
+    fetch("https://polar-crag-88682-7adc6d8f37e3.herokuapp.com/locations", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((locations) => {
+        setLocations(locations);
+      });
+  }, [token]); 
+  **/
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    fetch("https://polar-crag-88682-7adc6d8f37e3.herokuapp.com/locations", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log("Locations from API:", data);
@@ -27,7 +58,21 @@ export const MainView = () => {
         });
         setLocations(locationsFromApi);
       });
-  }, []);
+  }, [token]);
+
+  if (!user) {
+    return (
+      <>
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or <SignupView />
+      </>
+    );
+  }
 
   if (selectedLocation) {
     return (
@@ -55,6 +100,15 @@ export const MainView = () => {
           />
         );
       })}
+      <button
+        onClick={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };
