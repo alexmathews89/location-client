@@ -4,7 +4,11 @@ export const LocationView = ({ location, onBackClick }) => {
   return (
     <div>
       <div>{location.title}</div>
-      <div>{location.image}</div>
+      <img
+        src={location.image}
+        alt={location.title}
+        style={{ maxWidth: "100%", height: "auto" }}
+      />
       <div>{location.description}</div>
       <div>{location.locatedAt.citySubdivision}</div>
       <div>{location.locatedAt.fromStadiums}</div>

@@ -13,8 +13,10 @@ export const MainView = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [user, setUser] = useState(storedUser ? storedUser : null);
+  //const [user, setUser] = useState(null);
 
   const [token, setToken] = useState(storedToken ? storedToken : null);
+  //const [token, setToken] = useState(null);
 
   /* 
   useEffect(() => {
