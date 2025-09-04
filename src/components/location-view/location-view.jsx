@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
+import { Button } from "react-bootstrap";
 
 export const LocationView = ({ location, onBackClick }) => {
   return (
     <div>
-      <div>{location.title}</div>
+      <div style={{ textAlign: "center" }}>{location.title}</div>
       <img
         src={location.image}
         alt={location.title}
@@ -11,9 +12,11 @@ export const LocationView = ({ location, onBackClick }) => {
       />
       <div>{location.description}</div>
       <div>{location.locatedAt.citySubdivision}</div>
-      <div>{location.locatedAt.fromStadiums}</div>
-      <div>{location.dateNamed}</div>
-      <button onClick={onBackClick}>Back</button>
+      <div> Direction from Downtown: {location.locatedAt.fromStadiums}</div>
+      <div> Established in: {location.dateNamed}</div>
+      <Button variant="primary" onClick={onBackClick}>
+        Back
+      </Button>
     </div>
   );
 };

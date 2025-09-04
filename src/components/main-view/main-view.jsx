@@ -3,6 +3,7 @@ import { LocationCard } from "../location-card/location-card";
 import { LocationView } from "../location-view/location-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { Row, Col, Button } from "react-bootstrap";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -62,6 +63,7 @@ export const MainView = () => {
       });
   }, [token]);
 
+  /** 
   if (!user) {
     return (
       <>
@@ -112,5 +114,57 @@ export const MainView = () => {
         Logout
       </button>
     </div>
+  );
+  */
+
+  return (
+    <Row className="justify-content-md-center">
+      {!user ? (
+        <>
+          <Col md={5}>
+            <LoginView
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
+            />
+            or <SignupView />
+          </Col>
+        </>
+      ) : selectedLocation ? (
+        <Col md={8}>
+          <LocationView
+            location={selectedLocation}
+            onBackClick={() => setSelectedLocation(null)}
+          />
+        </Col>
+      ) : locations.length === 0 ? (
+        <div>The list is empty!</div>
+      ) : (
+        <>
+          {locations.map((location) => (
+            <Col className="mb-5" key={location.id} md={5}>
+              <LocationCard
+                //key={location.id}
+                location={location}
+                onLocationClick={(newSelectdLocation) => {
+                  setSelectedLocation(newSelectdLocation);
+                }}
+              />
+            </Col>
+          ))}
+          <Button
+            variant="primary"
+            onClick={() => {
+              setUser(null);
+              setToken(null);
+              localStorage.clear();
+            }}
+          >
+            Logout
+          </Button>
+        </>
+      )}
+    </Row>
   );
 };
