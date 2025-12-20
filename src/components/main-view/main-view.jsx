@@ -3,15 +3,27 @@ import { LocationCard } from "../location-card/location-card";
 import { LocationView } from "../location-view/location-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { ProfileView } from "../profile-view/profile-view";
 import { Row, Col, Button } from "react-bootstrap";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
+  //const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedUser = (() => {
+    try {
+      const user = localStorage.getItem("user");
+      return user ? JSON.parse(user) : null;
+    } catch {
+      return null;
+    }
+  })();
+
   const storedToken = localStorage.getItem("token");
 
   const [locations, setLocations] = useState([]);
 
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  //const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [user, setUser] = useState(storedUser ? storedUser : null);
   //const [user, setUser] = useState(null);
@@ -117,6 +129,7 @@ export const MainView = () => {
   );
   */
 
+  /** 
   return (
     <Row className="justify-content-md-center">
       {!user ? (
@@ -166,5 +179,120 @@ export const MainView = () => {
         </>
       )}
     </Row>
+  );
+  */
+
+  return (
+    <BrowserRouter>
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      />
+      <Row>
+        <Routes>
+          <Route
+            path="/signup"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={5}>
+                    <SignupView />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={5}>
+                    <LoginView
+                      onLoggedIn={(user, token) => {
+                        setUser(user);
+                        setToken(token);
+                      }}
+                    />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/locations/:locationID"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : locations.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <Col md={8}>
+                    <LocationView locations={locations} />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : locations.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    {locations.map((location) => (
+                      <Col className="mb-4" key={location.id} md={3}>
+                        <LocationCard
+                          location={location}
+                          user={user}
+                          token={token}
+                          setUser={setUser}
+                        />
+                      </Col>
+                    ))}
+                  </>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <ProfileView
+                    user={user}
+                    locations={locations}
+                    token={token}
+                    location={location}
+                    setUser={setUser}
+                    onLoggedOut={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.clear();
+                    }}
+                  />
+                )}
+              </>
+            }
+          />
+        </Routes>
+      </Row>
+    </BrowserRouter>
   );
 };
