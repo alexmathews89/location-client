@@ -16153,6 +16153,7 @@ const MainView = ()=>{
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     //const [token, setToken] = useState(null);
     const [searchKey, setSearchKey] = (0, _react.useState)("");
+    const [debouncedSearchKey, setDebouncedSearchKey] = (0, _react.useState)("");
     /* 
   useEffect(() => {
     if (!token) {
@@ -16190,16 +16191,20 @@ const MainView = ()=>{
             });
             setLocations(locationsFromApi);
         });
-        if (searchKey === locations.title) {
-            filterLocations();
-            setLocations(searchKey);
-        }
     }, [
         token
     ]);
-    const filterLocations = (arr, query)=>{
-        return arr.filter((el)=>el.toLowerCase().includes(query.toLowerCase()));
-    };
+    (0, _react.useEffect)(()=>{
+        const timeoutId = setTimeout(()=>{
+            setDebouncedSearchKey(searchKey);
+        }, 300); // 300ms delay
+        return ()=>{
+            clearTimeout(timeoutId);
+        };
+    }, [
+        searchKey
+    ]);
+    const filterdLocations = locations.filter((location1)=>location1.title.toLowerCase().includes(debouncedSearchKey.toLowerCase()));
     /** 
   if (!user) {
     return (
@@ -16316,7 +16321,7 @@ const MainView = ()=>{
                 }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 198,
+                lineNumber: 204,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
@@ -16329,24 +16334,24 @@ const MainView = ()=>{
                                     to: "/"
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 215,
+                                    lineNumber: 221,
                                     columnNumber: 19
                                 }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                     md: 5,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {}, void 0, false, {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 218,
+                                        lineNumber: 224,
                                         columnNumber: 21
                                     }, void 0)
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 217,
+                                    lineNumber: 223,
                                     columnNumber: 19
                                 }, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 210,
+                            lineNumber: 216,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -16356,7 +16361,7 @@ const MainView = ()=>{
                                     to: "/"
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 229,
+                                    lineNumber: 235,
                                     columnNumber: 19
                                 }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                     md: 5,
@@ -16367,18 +16372,18 @@ const MainView = ()=>{
                                         }
                                     }, void 0, false, {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 232,
+                                        lineNumber: 238,
                                         columnNumber: 21
                                     }, void 0)
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 231,
+                                    lineNumber: 237,
                                     columnNumber: 19
                                 }, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 224,
+                            lineNumber: 230,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -16389,13 +16394,13 @@ const MainView = ()=>{
                                     replace: true
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 248,
+                                    lineNumber: 254,
                                     columnNumber: 19
                                 }, void 0) : locations.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                     children: "The list is empty!"
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 250,
+                                    lineNumber: 256,
                                     columnNumber: 19
                                 }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                     md: 8,
@@ -16403,18 +16408,18 @@ const MainView = ()=>{
                                         locations: locations
                                     }, void 0, false, {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 253,
+                                        lineNumber: 259,
                                         columnNumber: 21
                                     }, void 0)
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 252,
+                                    lineNumber: 258,
                                     columnNumber: 19
                                 }, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 243,
+                            lineNumber: 249,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -16425,16 +16430,16 @@ const MainView = ()=>{
                                     replace: true
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 264,
+                                    lineNumber: 270,
                                     columnNumber: 19
                                 }, void 0) : locations.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                     children: "The list is empty!"
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 266,
+                                    lineNumber: 272,
                                     columnNumber: 19
                                 }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-                                    children: locations.map((location1)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                    children: filterdLocations.map((location1)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                             className: "mb-4",
                                             md: 3,
                                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _locationCard.LocationCard), {
@@ -16444,19 +16449,19 @@ const MainView = ()=>{
                                                 setUser: setUser
                                             }, void 0, false, {
                                                 fileName: "src/components/main-view/main-view.jsx",
-                                                lineNumber: 271,
+                                                lineNumber: 277,
                                                 columnNumber: 25
                                             }, void 0)
                                         }, location1.id, false, {
                                             fileName: "src/components/main-view/main-view.jsx",
-                                            lineNumber: 270,
+                                            lineNumber: 276,
                                             columnNumber: 23
                                         }, void 0))
                                 }, void 0, false)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 259,
+                            lineNumber: 265,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -16467,7 +16472,7 @@ const MainView = ()=>{
                                     replace: true
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 289,
+                                    lineNumber: 295,
                                     columnNumber: 19
                                 }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
                                     user: user,
@@ -16482,34 +16487,34 @@ const MainView = ()=>{
                                     }
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 291,
+                                    lineNumber: 297,
                                     columnNumber: 19
                                 }, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 284,
+                            lineNumber: 290,
                             columnNumber: 11
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 209,
+                    lineNumber: 215,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 208,
+                lineNumber: 214,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 197,
+        lineNumber: 203,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "DIcBLt3isL3pPTIeET1Ks9DQSNE=");
+_s(MainView, "lTLJhk+V5grIywfTTAQlwRx6i/A=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -39539,9 +39544,10 @@ const NavigationBar = ({ user, onLoggedOut, searchKey, onSearchChange })=>{
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default), {
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
-                                onChange: (e)=>{
-                                    e.target.value;
-                                }
+                                type: "text",
+                                placeholder: "search locations...",
+                                value: searchKey,
+                                onChange: (e)=>onSearchChange(e.target.value)
                             }, void 0, false, {
                                 fileName: "src/components/navigation-bar/navigation-bar.jsx",
                                 lineNumber: 43,

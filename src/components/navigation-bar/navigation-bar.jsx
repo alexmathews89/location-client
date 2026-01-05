@@ -41,9 +41,10 @@ export const NavigationBar = ({
           </Nav>
           <Form>
             <Form.Control
-              onChange={(e) => {
-                e.target.value;
-              }}
+              type="text"
+              placeholder="search locations..."
+              value={searchKey}
+              onChange={(e) => onSearchChange(e.target.value)}
             ></Form.Control>
           </Form>
         </Navbar.Collapse>

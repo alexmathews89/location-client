@@ -32,6 +32,7 @@ export const MainView = () => {
   //const [token, setToken] = useState(null);
 
   const [searchKey, setSearchKey] = useState("");
+  const [debouncedSearchKey, setDebouncedSearchKey] = useState("");
 
   /* 
   useEffect(() => {
@@ -75,16 +76,21 @@ export const MainView = () => {
         });
         setLocations(locationsFromApi);
       });
-
-    if (searchKey === locations.title) {
-      filterLocations();
-      setLocations(searchKey);
-    }
   }, [token]);
 
-  const filterLocations = (arr, query) => {
-    return arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()));
-  };
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchKey(searchKey);
+    }, 300); // 300ms delay
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchKey]);
+
+  const filterdLocations = locations.filter((location) =>
+    location.title.toLowerCase().includes(debouncedSearchKey.toLowerCase())
+  );
 
   /** 
   if (!user) {
@@ -266,7 +272,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    {locations.map((location) => (
+                    {filterdLocations.map((location) => (
                       <Col className="mb-4" key={location.id} md={3}>
                         <LocationCard
                           location={location}
