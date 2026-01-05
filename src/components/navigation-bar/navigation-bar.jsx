@@ -1,7 +1,13 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Form from "react-bootstrap/Form";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({
+  user,
+  onLoggedOut,
+  searchKey,
+  onSearchChange,
+}) => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -33,6 +39,13 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
               </>
             )}
           </Nav>
+          <Form>
+            <Form.Control
+              onChange={(e) => {
+                e.target.value;
+              }}
+            ></Form.Control>
+          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>

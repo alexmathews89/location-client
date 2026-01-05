@@ -31,6 +31,8 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   //const [token, setToken] = useState(null);
 
+  const [searchKey, setSearchKey] = useState("");
+
   /* 
   useEffect(() => {
     if (!token) {
@@ -73,7 +75,16 @@ export const MainView = () => {
         });
         setLocations(locationsFromApi);
       });
+
+    if (searchKey === locations.title) {
+      filterLocations();
+      setLocations(searchKey);
+    }
   }, [token]);
+
+  const filterLocations = (arr, query) => {
+    return arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()));
+  };
 
   /** 
   if (!user) {
@@ -186,6 +197,8 @@ export const MainView = () => {
     <BrowserRouter>
       <NavigationBar
         user={user}
+        searchKey={searchKey}
+        onSearchChange={setSearchKey}
         onLoggedOut={() => {
           setUser(null);
           setToken(null);
