@@ -12,7 +12,7 @@ export const LocationCard = ({ location, user, token, setUser }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     )
       .then((response) => response.json())
       .then((updatedUser) => {
@@ -36,7 +36,7 @@ export const LocationCard = ({ location, user, token, setUser }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "Application/json",
         },
-      }
+      },
     )
       .then((response) => response.json())
       .then((updatedUser) => {
@@ -64,25 +64,6 @@ export const LocationCard = ({ location, user, token, setUser }) => {
         Remove from Favorites
       </Button>
     </Card>
-
-    /** 
-    <Card>
-      <Card.Title>{location.title}</Card.Title>
-      <Button onClick={() => onLocationClick(location)} variant="link">
-        Open
-      </Button>
-    </Card>
-    */
-
-    /** 
-    <div
-      onClick={() => {
-        onLocationClick(location);
-      }}
-    >
-      {location.title}
-    </div>
-    */
   );
 };
 

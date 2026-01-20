@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import "./navigation-bar.scss";
 
 export const NavigationBar = ({
   user,
@@ -12,7 +13,7 @@ export const NavigationBar = ({
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          Seattle Spots App
+          <div className="app-title">Seattle Spots App</div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -20,33 +21,37 @@ export const NavigationBar = ({
             {!user && (
               <>
                 <Nav.Link as={Link} to="/login">
-                  Login
+                  <div className="nav-option">Login</div>
                 </Nav.Link>
                 <Nav.Link as={Link} to="/signup">
-                  Sign Up
+                  <div className="nav-option">Sign Up</div>
                 </Nav.Link>
               </>
             )}
             {user && (
               <>
                 <Nav.Link as={Link} to="/">
-                  Home
+                  <div className="nav-option">Home</div>
                 </Nav.Link>
                 <Nav.Link as={Link} to="/users">
-                  Profile
+                  <div className="nav-option">Profile</div>
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link onClick={onLoggedOut}>
+                  <div className="nav-option">Logout</div>
+                </Nav.Link>
               </>
             )}
           </Nav>
-          <Form>
-            <Form.Control
-              type="text"
-              placeholder="search locations..."
-              value={searchKey}
-              onChange={(e) => onSearchChange(e.target.value)}
-            ></Form.Control>
-          </Form>
+          {user && (
+            <Form>
+              <Form.Control
+                type="text"
+                placeholder="search locations..."
+                value={searchKey}
+                onChange={(e) => onSearchChange(e.target.value)}
+              ></Form.Control>
+            </Form>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

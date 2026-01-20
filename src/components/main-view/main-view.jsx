@@ -34,22 +34,6 @@ export const MainView = () => {
   const [searchKey, setSearchKey] = useState("");
   const [debouncedSearchKey, setDebouncedSearchKey] = useState("");
 
-  /* 
-  useEffect(() => {
-    if (!token) {
-      return;
-    }
-
-    fetch("https://polar-crag-88682-7adc6d8f37e3.herokuapp.com/locations", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((locations) => {
-        setLocations(locations);
-      });
-  }, [token]); 
-  **/
-
   useEffect(() => {
     if (!token) {
       return;
@@ -89,115 +73,8 @@ export const MainView = () => {
   }, [searchKey]);
 
   const filterdLocations = locations.filter((location) =>
-    location.title.toLowerCase().includes(debouncedSearchKey.toLowerCase())
+    location.title.toLowerCase().includes(debouncedSearchKey.toLowerCase()),
   );
-
-  /** 
-  if (!user) {
-    return (
-      <>
-        <LoginView
-          onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-        or <SignupView />
-      </>
-    );
-  }
-
-  if (selectedLocation) {
-    return (
-      <LocationView
-        location={selectedLocation}
-        onBackClick={() => setSelectedLocation(null)}
-      />
-    );
-  }
-
-  if (locations.length === 0) {
-    return <div>The list is empty!</div>;
-  }
-
-  return (
-    <div>
-      {locations.map((location) => {
-        return (
-          <LocationCard
-            key={location.id}
-            location={location}
-            onLocationClick={(newSelectdLocation) => {
-              setSelectedLocation(newSelectdLocation);
-            }}
-          />
-        );
-      })}
-      <button
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      >
-        Logout
-      </button>
-    </div>
-  );
-  */
-
-  /** 
-  return (
-    <Row className="justify-content-md-center">
-      {!user ? (
-        <>
-          <Col md={5}>
-            <LoginView
-              onLoggedIn={(user, token) => {
-                setUser(user);
-                setToken(token);
-              }}
-            />
-            or <SignupView />
-          </Col>
-        </>
-      ) : selectedLocation ? (
-        <Col md={8}>
-          <LocationView
-            location={selectedLocation}
-            onBackClick={() => setSelectedLocation(null)}
-          />
-        </Col>
-      ) : locations.length === 0 ? (
-        <div>The list is empty!</div>
-      ) : (
-        <>
-          {locations.map((location) => (
-            <Col className="mb-5" key={location.id} md={5}>
-              <LocationCard
-                //key={location.id}
-                location={location}
-                onLocationClick={(newSelectdLocation) => {
-                  setSelectedLocation(newSelectdLocation);
-                }}
-              />
-            </Col>
-          ))}
-          <Button
-            variant="primary"
-            onClick={() => {
-              setUser(null);
-              setToken(null);
-              localStorage.clear();
-            }}
-          >
-            Logout
-          </Button>
-        </>
-      )}
-    </Row>
-  );
-  */
 
   return (
     <BrowserRouter>

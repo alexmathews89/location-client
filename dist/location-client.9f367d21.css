@@ -1,3 +1,107 @@
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.location-description {
+  animation: .6s ease-out forwards slideInFromRight;
+}
+
+.location-subdivision {
+  animation: .8s ease-out forwards slideInFromRight;
+}
+
+.location-direction {
+  animation: .85s ease-out forwards slideInFromRight;
+}
+
+.location-date {
+  animation: .9s ease-out forwards slideInFromRight;
+}
+
+.location-image {
+  animation: .6s ease-out forwards slideInFromLeft;
+}
+
+.location-title {
+  font-family: Anton, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  animation: .8s ease-out forwards slideInFromLeft;
+}
+
+.location-description {
+  font-optical-sizing: auto;
+  font-family: Playfair Display, serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.location-subdivision, .location-direction, .location-date {
+  font-optical-sizing: auto;
+  text-align: center;
+  font-family: Playfair Display, serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.app-title {
+  font-family: Pacifico, cursive;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.nav-option {
+  font-family: Pacifico, cursive;
+  font-style: normal;
+  font-weight: 400;
+}
+
+h3, h5 {
+  font-family: Anton, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+h6, .form-label {
+  font-optical-sizing: auto;
+  font-family: Playfair Display, serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.favorite-locations {
+  font-optical-sizing: auto;
+  padding-top: 10px;
+  font-family: Playfair Display, serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+}
+
 :root, [data-bs-theme="light"] {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

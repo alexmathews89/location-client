@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { LocationCard } from "../location-card/location-card";
+import "./profile-view.scss";
 
 export const ProfileView = ({
   user,
@@ -18,7 +19,7 @@ export const ProfileView = ({
 
   console.log(user);
   let favoriteLocations = locations.filter((l) =>
-    user?.FavoriteLocations?.includes(l.id)
+    user?.FavoriteLocations?.includes(l.id),
   );
 
   const handleSubmit = (event) => {
@@ -27,9 +28,7 @@ export const ProfileView = ({
     const data = {
       Username: username,
       Password: password,
-      /**if(password) {
-        data.Password = password;
-      }, */
+
       Email: email,
       Birthday: birthday,
     };
@@ -43,7 +42,7 @@ export const ProfileView = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }
+      },
     )
       .then((response) => {
         console.log(response);
@@ -70,7 +69,7 @@ export const ProfileView = ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     )
       .then((response) => {
         if (response.ok) {
@@ -93,7 +92,9 @@ export const ProfileView = ({
       <br></br>
       <h6>Birthday: {new Date(user.Birthday).toLocaleDateString()}</h6>
       <br></br>
-      <>Favorite Locations:</>
+      <>
+        <div className="favorite-locations">Favorite Locations:</div>
+      </>
       {favoriteLocations.map((location) => {
         return (
           <LocationCard
@@ -110,11 +111,15 @@ export const ProfileView = ({
       <br></br>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>
+            <div className="form-label">Username</div>
+          </Form.Label>
           <Form.Control type="text" value={username} disabled />
         </Form.Group>
         <Form.Group controlId="formPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>
+            <div className="form-label">Password</div>
+          </Form.Label>
           <Form.Control
             type="password"
             name="password"
@@ -123,7 +128,9 @@ export const ProfileView = ({
           />
         </Form.Group>
         <Form.Group controlId="formEmail">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>
+            <div className="form-label">Email</div>
+          </Form.Label>
           <Form.Control
             type="email"
             name="email"
@@ -132,7 +139,9 @@ export const ProfileView = ({
           />
         </Form.Group>
         <Form.Group controlId="formBirthday">
-          <Form.Label>Birthday</Form.Label>
+          <Form.Label>
+            <div className="form-label">Birthday</div>
+          </Form.Label>
           <Form.Control
             type="date"
             name="birthday"
